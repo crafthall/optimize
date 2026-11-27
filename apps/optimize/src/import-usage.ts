@@ -80,7 +80,7 @@ export const importUsage: Handler = (args, io, deps) =>
       json: { type: 'boolean' },
     });
     if (positionals.length) throw new UsageError(`unexpected argument "${positionals[0]}". Paste the /usage rows on stdin or pass --usage-file <file>`);
-    if (values.otel !== undefined) throw new UsageError('--otel is not built yet (moved to release 1, #1116); paste the /usage rows or pass --read-transcripts <dir>');
+    if (values.otel !== undefined) throw new UsageError('--otel is not built yet (moved to release 1); paste the /usage rows or pass --read-transcripts <dir>');
     const repoRoot = repoRootOf(deps);
     const abs = (p: string): string => (isAbsolute(p) ? p : resolve(deps.cwd, p));
 

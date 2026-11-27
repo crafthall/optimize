@@ -96,7 +96,7 @@ git('checkout', '-q', '--', 'CLAUDE.md');
 const GO = ['compare', '--change', 'change.patch', '--monthly-volume', '1000', '--yes'];
 const opts = (extra: Record<string, string>) => ({ cwd: repo, env: { ...env, ...extra }, nodeArgs: ['--import', pathToFileURL(PRELOAD).href], timeout: 300_000 });
 
-describe('compare: an environment error mid-comparison keeps the completed runs (#1137, built binary)', () => {
+describe('compare: an environment error mid-comparison keeps the completed runs (built binary)', () => {
   beforeEach(() => {
     rmSync(gitState, { recursive: true, force: true });
     mkdirSync(gitState);

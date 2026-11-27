@@ -60,7 +60,7 @@ describe('findPrivacyLeaks', () => {
       expect(findPrivacyLeaks({ s })).toEqual([]);
   });
 
-  it('a single lower-case segment is a slash command, not a path (#1066: verdict text may name /usage)', () => {
+  it('a single lower-case segment is a slash command, not a path (verdict text may name /usage)', () => {
     for (const s of ['run /usage first', '/usage', 'Run /usage.', 'try /effort high', '(see /compact)', 'pasted from /usage, row 2'])
       expect(findPrivacyLeaks({ s }), s).toEqual([]);
     for (const s of ['/x.js', 'node /opt/tool', '/Users', 'cd /home/jane', 'see /usage/x', '/tmp/a.md'])
@@ -73,13 +73,13 @@ describe('findPrivacyLeaks', () => {
     expect(findPrivacyLeaks({ v: 'Q tasks' }, { identities: ['Jane Q Doe'] })).toEqual([]);
   });
 
-  it('common words of a multi-word or generic identity are no identity tokens (#1118: "Test User" vs `npm test`)', () => {
+  it('common words of a multi-word or generic identity are no identity tokens ("Test User" vs `npm test`)', () => {
     expect(identityTokens(['Test User', 'runner', 'localhost', 'Admin', 'Jane Test'])).toEqual(['Test User', 'Jane Test', 'Jane']);
     expect(findPrivacyLeaks({ check: 'npm test', a: 'node user.js' }, { identities: ['Test User', 'runner'] })).toEqual([]);
     expect(findPrivacyLeaks({ v: 'signed: Test User' }, { identities: ['Test User'] })).toEqual([{ path: '/v', kind: 'identity' }]);
   });
 
-  it('property (#1118): a real name word is caught as a whole token in any text, even next to stop words', () => {
+  it('property: a real name word is caught as a whole token in any text, even next to stop words', () => {
     const stop = fc.constantFrom(...IDENTITY_STOP_WORDS);
     const real = fc.stringMatching(/^[A-Z][a-z]{3,9}$/).filter((w) => !IDENTITY_STOP_WORDS.has(w.toLowerCase()));
     const sep = fc.constantFrom(' ', '/', '-', ': ', '(', '#', '.');
@@ -92,7 +92,7 @@ describe('findPrivacyLeaks', () => {
     );
   });
 
-  it('property (#1118): identities made only of stop words never refuse a command made of the same words', () => {
+  it('property: identities made only of stop words never refuse a command made of the same words', () => {
     const stop = fc.constantFrom(...IDENTITY_STOP_WORDS);
     fc.assert(
       fc.property(fc.array(stop, { minLength: 2, maxLength: 3 }), fc.array(stop, { minLength: 1, maxLength: 4 }), (words, cmd) => {

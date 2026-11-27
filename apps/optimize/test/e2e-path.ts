@@ -41,7 +41,7 @@ export function resolveClaude(path: string): string | null {
 
 /** Throws unless `claude` on `path` is a registered stub or absent. */
 export function assertNoRealClaude(path: string | undefined): void {
-  if (!path) throw new Error('E2E env has no PATH; build it with e2ePath() (#1118)');
+  if (!path) throw new Error('E2E env has no PATH; build it with e2ePath()');
   const found = resolveClaude(path);
   if (found === null) return;
   let real = found;
@@ -50,7 +50,7 @@ export function assertNoRealClaude(path: string | undefined): void {
   } catch {
     // unresolvable: compared as given, so it is rejected below
   }
-  if (!stubs.has(real)) throw new Error(`E2E PATH resolves \`claude\` to ${found}, which is no test stub – no test may run the real claude (#1118)`);
+  if (!stubs.has(real)) throw new Error(`E2E PATH resolves \`claude\` to ${found}, which is no test stub – no test may run the real claude`);
 }
 
 /** The E2E PATH: the stub folder first when given, then node and git, then /usr/bin:/bin. Checked before return. */

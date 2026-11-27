@@ -73,13 +73,13 @@ describe('brand module (R1-01)', () => {
     for (const u of uses) expect(u.startsWith(`${brand.BIN_NAME}/`) || [`${brand.BIN_NAME} config set billing`, `${brand.BIN_NAME} usage --json`].includes(u), u).toBe(true);
   });
 
-  it('src/brand.ts re-exports @crafthall/optimize-engine/brand and spells no id itself (R1-10, #1079)', () => {
+  it('src/brand.ts re-exports @crafthall/optimize-engine/brand and spells no id itself (R1-10)', () => {
     const src = code(join(APP, 'src', 'brand.ts'));
     expect(src).toMatch(/from '@crafthall\/optimize-engine\/brand'/);
     expect(src).not.toMatch(/crafthall-optimize|@crafthall\/optimize(?!-engine)|Crafthall Optimize|\b0\.1\.0\b/);
   });
 
-  it('the support address is a placeholder until R1-14 (#1084) confirms it', () => {
+  it('the support address is a placeholder until R1-14 confirms it', () => {
     expect(brand.SUPPORT_ADDRESS_STATUS).toBe('pending-R1-14');
   });
 });

@@ -77,7 +77,7 @@ git('checkout', '-q', '--', 'CLAUDE.md');
 const COMPARE = ['compare', '--change', 'change.patch', '--runs-per-arm', '5', '--monthly-volume', '1000', '--yes'];
 const CURRENCY = /(?:\b(?:USD|EUR|CHF|GBP)\s?\d|[$€£]\s?\d)/;
 
-describe('compare --metric with the built binary (#1165)', () => {
+describe('compare --metric with the built binary', () => {
   it('setup: fixture add', () => {
     const r = runBin('fixture', 'add', 'task-a', '--prompt', 'task.md', '--check', 'node check.mjs');
     expect(r.status, r.stderr).toBe(0);

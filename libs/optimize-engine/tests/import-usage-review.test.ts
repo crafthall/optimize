@@ -12,13 +12,13 @@ const req = (t: number, f: Partial<RequestFields>): RequestFields => ({ t, sidec
 const session = (requests: RequestFields[], toolResults: ToolResultFields[] = []): SessionFields => ({ requests, toolResults, ttlSplit: true });
 const shareOf = (d: ReturnType<typeof checkD2>[number] | undefined): number => (d && d.effect.kind === 'estimate' ? d.effect.share : NaN);
 
-describe('#1116 review – cost weights', () => {
+describe('review – cost weights', () => {
   it('weights match the pricing page ratios and output is weighted 5x input', () => {
     expect(TOKEN_WEIGHTS).toEqual({ input: 1, write5m: 1.25, write1h: 2, read: 0.1, output: 5 });
   });
 });
 
-describe('#1116 review – D2 by hand', () => {
+describe('review – D2 by hand', () => {
   it('1h → 5m counts the reads after a mid gap even when that request also wrote at 1h (failing before: write1h === 0 filter)', () => {
     // Typical 1h user: after a 20-minute gap the next request reads the whole 50k prefix and writes its new message at 1h.
     // Under 5m those 50k would be written again: Δ = 0.75·W₁ − 1.15·R′ = 0.75·52,500 − 1.15·50,000 = −18,125 → no saving.
@@ -57,7 +57,7 @@ describe('#1116 review – D2 by hand', () => {
   });
 });
 
-describe('#1116 review – D6 by hand', () => {
+describe('review – D6 by hand', () => {
   it('share = excess·(1.25 + 0.1·(later − 1)) ÷ total, total with output at 5x', () => {
     // 28,000-char Bash result at t = 1; three later requests. Excess = (28,000 − 8,000) ÷ 4 = 5,000 tokens;
     // cost = 5,000·(1.25 + 0.1·2) = 7,250. Each request: 10 + 1.25·1,000 + 0.1·20,000 + 5·200 = 4,260; four → 17,040.
@@ -74,7 +74,7 @@ describe('#1116 review – D6 by hand', () => {
   });
 });
 
-describe('#1116 review – the "not measurable" cutoff', () => {
+describe('review – the "not measurable" cutoff', () => {
   it('is the t-based MDE at the run cap (30 per arm, 3 tasks, df 54), as the plan block prints (failing before: normal 19.13%)', () => {
     // Hand: σ = √ln 1.09 = 0.293560; t₀.₉₇₅,₅₄ + t₀.₈₀,₅₄ = 2.00488 + 0.84823 = 2.85311; √(2/30) = 0.258199;
     // 1 − exp(−2.85311·0.293560·0.258199) = 1 − exp(−0.216258) = 0.19447.
@@ -106,7 +106,7 @@ const sessionArb: fc.Arbitrary<SessionFields> = fc
     });
   });
 
-describe('#1116 review – properties', () => {
+describe('review – properties', () => {
   it('D2 and D6 shares are finite, in (0, 1], and never grow when a request gains output tokens', () => {
     fc.assert(
       fc.property(fc.array(sessionArb, { minLength: 1, maxLength: 3 }), fc.nat(50_000), (sessions, extra) => {

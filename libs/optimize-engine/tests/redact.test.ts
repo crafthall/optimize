@@ -58,7 +58,7 @@ describe('redactRecord', () => {
     expect(red.arms[0]!.configHash).toBe(red.arms[1]!.configHash);
   });
 
-  it('keeps the metric and the per-model token sums, so a redacted token record re-prints in token use (#1165 review)', () => {
+  it('keeps the metric and the per-model token sums, so a redacted token record re-prints in token use (review)', () => {
     const tok: ComparisonRecordV1 = {
       ...record,
       schemaVersion: '1.5.0',

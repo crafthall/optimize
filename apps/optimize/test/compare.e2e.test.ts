@@ -105,7 +105,7 @@ describe('compare and report with the built binary and a stubbed claude', () => 
     expect(records()).toEqual([]);
   });
 
-  it('compare --plan-only under --max-runs recomputes both MDEs for the runs that fit and says so (#1112)', () => {
+  it('compare --plan-only under --max-runs recomputes both MDEs for the runs that fit and says so', () => {
     const r = runBin('compare', '--change', 'change.patch', '--plan-only', '--max-runs', '4');
     expect(r.status, r.stderr).toBe(0);
     expect(r.stdout).toMatch(/planned MDE: +\d+\.\d% saving detectable at n = 2 per arm/);

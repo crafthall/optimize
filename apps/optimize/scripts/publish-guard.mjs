@@ -15,7 +15,7 @@ export const GO_ENV = 'CRAFTHALL_OPTIMIZE_PUBLISH_GO';
 /** Why publishing must stop, or null when the explicit go matches this package. */
 export function publishRefusal(pkg, env) {
   const id = `${pkg.name}@${pkg.version}`;
-  if (env[GO_ENV] !== id) return `refusing to publish ${id}: set ${GO_ENV}=${id} only after the owner's publication go (R1-16)`;
+  if (env[GO_ENV] !== id) return `refusing to publish ${id}: set ${GO_ENV}=${id} only after the owner's publication go`;
   return null;
 }
 

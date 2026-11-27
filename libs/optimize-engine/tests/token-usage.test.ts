@@ -282,7 +282,7 @@ describe('properties (fast-check)', () => {
 
 // QA (§13 of stats-review-1031.md): every threshold ±1 ms / ±1 character, the per-request caps, and the
 // D6 wording for a result with no later request.
-describe('thresholds and caps (#1166)', () => {
+describe('thresholds and caps', () => {
   const T = Date.parse('2026-11-26T00:00:00Z');
   const req = (t: number, over: Partial<{ input: number; write5m: number; write1h: number; read: number; output: number; sidechain: boolean; model: string | null }> = {}) => ({
     t,

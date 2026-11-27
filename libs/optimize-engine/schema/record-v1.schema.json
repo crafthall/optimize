@@ -20,7 +20,7 @@
         "subscription-capacity",
         "usage-credits"
       ],
-      "description": "One of the four cost labels (#1033)."
+      "description": "One of the four cost labels."
     },
     "schemaVersion": {
       "type": "string",
@@ -223,7 +223,7 @@
             "interrupted",
             "error"
           ],
-          "description": "Since 1.4.0 (#1131): why an incomplete record stopped. `interrupted` (Ctrl-C or a kill) caps the verdict at likely-saving."
+          "description": "Since 1.4.0: why an incomplete record stopped. `interrupted` (Ctrl-C or a kill) caps the verdict at likely-saving."
         },
         "metric": {
           "type": "string",
@@ -231,7 +231,7 @@
             "tokens",
             "cost"
           ],
-          "description": "Since 1.5.0 (#1165): what the verdict measures – token use per run or total_cost_usd. Absent = cost. result.costRatio and result.ci95 hold the ratio of this metric."
+          "description": "Since 1.5.0: what the verdict measures – token use per run or total_cost_usd. Absent = cost. result.costRatio and result.ci95 hold the ratio of this metric."
         },
         "auth": {
           "type": "string",
@@ -239,7 +239,7 @@
             "api-key",
             "subscription"
           ],
-          "description": "How the runs authenticated (`compare --auth`, #1068; since 1.1.0). The mode only, never a key or token."
+          "description": "How the runs authenticated (`compare --auth`; since 1.1.0). The mode only, never a key or token."
         },
         "labels": {
           "type": "object",
@@ -249,7 +249,7 @@
             "measurementCost",
             "saving"
           ],
-          "description": "Cost labels (#1033; since 1.2.0): the billing mode at compare time (`config set billing`) and the label of the measurement cost and of a saving.",
+          "description": "Cost labels (since 1.2.0): the billing mode at compare time (`config set billing`) and the label of the measurement cost and of a saving.",
           "properties": {
             "billing": {
               "type": "string",
@@ -296,7 +296,7 @@
             "modelByArm": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Since 1.3.0 (#1130): the model of each arm's first counted run (since 1.4.0 each fixture of an arm pins its own model, #1131); an arm without a counted run is absent.",
+              "description": "Since 1.3.0: the model of each arm's first counted run (since 1.4.0 each fixture of an arm pins its own model); an arm without a counted run is absent.",
               "properties": {
                 "baseline": {
                   "type": "string",
@@ -343,7 +343,7 @@
               "items": {
                 "$ref": "#/$defs/repoPath"
               },
-              "description": "Repo-relative paths the change touches (R0-02; R2-04 links them to an agent or skill)."
+              "description": "Repo-relative paths the change touches."
             }
           }
         },
@@ -520,7 +520,7 @@
                       "cacheRead",
                       "output"
                     ],
-                    "description": "Since 1.5.0 (#1165): tokens summed over every model of modelUsage (cache write = 5m + 1h).",
+                    "description": "Since 1.5.0: tokens summed over every model of modelUsage (cache write = 5m + 1h).",
                     "properties": {
                       "input": {
                         "$ref": "#/$defs/nonNegInt"

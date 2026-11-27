@@ -270,7 +270,7 @@ describe('analysis and report', () => {
 
 // QA review of (stats-review-1031.md " review"): a plan under which some task gets fewer than 2 runs in
 // an arm can never produce an interval (welchRatioCi needs 2 runs per task arm), so it must not print a finite MDE.
-describe('plan without a possible interval (#1112 review)', () => {
+describe('plan without a possible interval (review)', () => {
   const fx = (k: number) => ['f1', 'f2', 'f3'].slice(0, k).map((name) => ({ name, maxBudgetUsd: 0.5 }));
   const cellCounts = (tasks: number, k: number, maxRuns: number) => {
     const counts = new Map<string, number>();
@@ -437,7 +437,7 @@ describe('isModelFallback: the model is pinned per arm', () => {
 
 // item 1 (stats review §11 item 2): informative censoring. A record the user interrupted is at most "likely saving";
 // a stop that does not depend on the outcomes keeps the verdict.
-describe('verdict of an interrupted record (#1131)', () => {
+describe('verdict of an interrupted record', () => {
   const metrics = (cost: number) => ({ inputTokens: 10, cacheCreation5mTokens: 0, cacheCreation1hTokens: 0, cacheReadTokens: 100, outputTokens: 20, totalCostUsd: cost, durationApiMs: 1000, model: 'claude-opus-5-5' });
   const STOPS: (StopReason | undefined)[] = [undefined, 'run-cap', 'claude-code-version', 'error', 'interrupted'];
   /** Runs of 1-3 tasks, 2-6 per arm each, changed cost = baseline × ratio × noise (both arms log-normal noise). */
@@ -511,7 +511,7 @@ describe('verdict of an interrupted record (#1131)', () => {
 
 // item 2: the model pin is per (arm, fixture). Fixtures of one arm on different configured models are measured;
 // a model change within one (arm, fixture) is still a fallback.
-describe('isModelFallback per (arm, fixture) (#1131)', () => {
+describe('isModelFallback per (arm, fixture)', () => {
   it('two fixtures of one arm on different models: none is a fallback; a change within one fixture is', () => {
     const pins: Record<string, string> = {};
     const seq: [Arm, string, string][] = [
@@ -562,7 +562,7 @@ describe('isModelFallback per (arm, fixture) (#1131)', () => {
 
 // QA review: the key choice itself. Fixtures with the same configured model (or none) share one pin group;
 // only a different configuration or the other arm gives another key.
-describe('modelPinKeyFor: the pin group is the arm plus the configured model (#1131 review)', () => {
+describe('modelPinKeyFor: the pin group is the arm plus the configured model (review)', () => {
   it('equal configurations, including none, share a key; another value or arm does not', () => {
     expect(modelPinKeyFor('baseline', null)).toBe(modelPinKeyFor('baseline', undefined));
     expect(modelPinKeyFor('baseline', 'opus')).toBe(modelPinKeyFor('baseline', 'opus'));
@@ -592,7 +592,7 @@ describe('modelPinKeyFor: the pin group is the arm plus the configured model (#1
 
 // QA review, Lead decision: an incomplete record without `stop` (before schema 1.4.0) may have been
 // interrupted, so `report` caps its verdict too; a complete record without `stop` keeps it.
-describe('verdict of an incomplete record without `stop` (#1131 review)', () => {
+describe('verdict of an incomplete record without `stop` (review)', () => {
   const metrics = (cost: number) => ({ inputTokens: 10, cacheCreation5mTokens: 0, cacheCreation1hTokens: 0, cacheReadTokens: 100, outputTokens: 20, totalCostUsd: cost, durationApiMs: 1000, model: 'claude-opus-5-5' });
   const runs = Array.from({ length: 6 }, (_, i) => [
     { seq: 2 * i, fixture: 'f1', arm: 'baseline' as const, oracleExitCode: 0, metrics: metrics([0.4, 0.42, 0.38, 0.41, 0.39, 0.4][i]!) },

@@ -74,7 +74,7 @@ function referenceTokenRatio(runs: readonly Run[], exclusions: readonly { seq: n
   return d.length ? Math.exp(m(d)) : null;
 }
 
-describe('token metric (#1165)', () => {
+describe('token metric', () => {
   it('modelUsage tokens are summed over every model; cache write is cacheCreationInputTokens (5m + 1h)', () => {
     expect(
       modelUsageTokens({
@@ -221,7 +221,7 @@ describe('token metric (#1165)', () => {
   });
 });
 
-describe('older records and --metric cost (differential, #1165)', () => {
+describe('older records and --metric cost (differential)', () => {
   const golden = JSON.parse(readFileSync(join(import.meta.dirname, 'fixtures', 'metric-cost-golden.json'), 'utf8')) as {
     cases: { input: { seed: number; resamples: number; status: 'complete' | 'incomplete'; stop: string | null; record: ComparisonRecordV1 }; output: { analysis: unknown; verdictText: string; report: string[] } }[];
   };

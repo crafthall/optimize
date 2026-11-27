@@ -28,7 +28,7 @@ export const recordSchemaV1 = {
   description: 'A fixture or a comparison record of Crafthall Optimize, stored locally under <repo>/.crafthall/optimize/.',
   oneOf: [{ $ref: '#/$defs/fixture' }, { $ref: '#/$defs/comparison' }],
   $defs: {
-    costLabel: { type: 'string', enum: ['api-billing', 'api-equivalent-estimate', 'subscription-capacity', 'usage-credits'], description: 'One of the four cost labels (#1033).' },
+    costLabel: { type: 'string', enum: ['api-billing', 'api-equivalent-estimate', 'subscription-capacity', 'usage-credits'], description: 'One of the four cost labels.' },
     schemaVersion: { type: 'string', pattern: '^1\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$', description: 'Semver of the record schema; major 1.' },
     semver: { type: 'string', pattern: SEMVER },
     timestamp: { type: 'string', pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,3})?Z$', description: 'UTC, ISO 8601.' },
@@ -92,19 +92,19 @@ export const recordSchemaV1 = {
         stop: {
           type: 'string',
           enum: ['run-cap', 'claude-code-version', 'interrupted', 'error'],
-          description: 'Since 1.4.0 (#1131): why an incomplete record stopped. `interrupted` (Ctrl-C or a kill) caps the verdict at likely-saving.',
+          description: 'Since 1.4.0: why an incomplete record stopped. `interrupted` (Ctrl-C or a kill) caps the verdict at likely-saving.',
         },
         metric: {
           type: 'string',
           enum: ['tokens', 'cost'],
-          description: 'Since 1.5.0 (#1165): what the verdict measures – token use per run or total_cost_usd. Absent = cost. result.costRatio and result.ci95 hold the ratio of this metric.',
+          description: 'Since 1.5.0: what the verdict measures – token use per run or total_cost_usd. Absent = cost. result.costRatio and result.ci95 hold the ratio of this metric.',
         },
-        auth: { type: 'string', enum: ['api-key', 'subscription'], description: 'How the runs authenticated (`compare --auth`, #1068; since 1.1.0). The mode only, never a key or token.' },
+        auth: { type: 'string', enum: ['api-key', 'subscription'], description: 'How the runs authenticated (`compare --auth`; since 1.1.0). The mode only, never a key or token.' },
         labels: {
           type: 'object',
           additionalProperties: false,
           required: ['billing', 'measurementCost', 'saving'],
-          description: 'Cost labels (#1033; since 1.2.0): the billing mode at compare time (`config set billing`) and the label of the measurement cost and of a saving.',
+          description: 'Cost labels (since 1.2.0): the billing mode at compare time (`config set billing`) and the label of the measurement cost and of a saving.',
           properties: {
             billing: { type: 'string', enum: ['api', 'subscription', 'credits', 'unset'] },
             measurementCost: { $ref: '#/$defs/costLabel' },
@@ -123,7 +123,7 @@ export const recordSchemaV1 = {
             modelByArm: {
               type: 'object',
               additionalProperties: false,
-              description: "Since 1.3.0 (#1130): the model of each arm's first counted run (since 1.4.0 each fixture of an arm pins its own model, #1131); an arm without a counted run is absent.",
+              description: "Since 1.3.0: the model of each arm's first counted run (since 1.4.0 each fixture of an arm pins its own model); an arm without a counted run is absent.",
               properties: {
                 baseline: { type: 'string', pattern: '^[0-9A-Za-z.:@_-]{1,128}$' },
                 changed: { type: 'string', pattern: '^[0-9A-Za-z.:@_-]{1,128}$' },
@@ -141,7 +141,7 @@ export const recordSchemaV1 = {
           type: 'object',
           additionalProperties: false,
           required: ['changedFiles'],
-          properties: { changedFiles: { type: 'array', maxItems: 1000, items: { $ref: '#/$defs/repoPath' }, description: 'Repo-relative paths the change touches (R0-02; R2-04 links them to an agent or skill).' } },
+          properties: { changedFiles: { type: 'array', maxItems: 1000, items: { $ref: '#/$defs/repoPath' }, description: 'Repo-relative paths the change touches.' } },
         },
         fixtures: {
           type: 'array',
@@ -208,7 +208,7 @@ export const recordSchemaV1 = {
                     type: 'object',
                     additionalProperties: false,
                     required: ['input', 'cacheWrite', 'cacheRead', 'output'],
-                    description: 'Since 1.5.0 (#1165): tokens summed over every model of modelUsage (cache write = 5m + 1h).',
+                    description: 'Since 1.5.0: tokens summed over every model of modelUsage (cache write = 5m + 1h).',
                     properties: {
                       input: { $ref: '#/$defs/nonNegInt' },
                       cacheWrite: { $ref: '#/$defs/nonNegInt' },

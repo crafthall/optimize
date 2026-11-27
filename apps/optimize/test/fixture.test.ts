@@ -172,7 +172,7 @@ describe('fixture add', () => {
     expect(d.fs.files.has(`${FIXTURES}/f1.json`)).toBe(false);
   });
 
-  it('accepts `npm test` for a git user "Test User" on a machine "runner" (#1118), still refuses a real name word', () => {
+  it('accepts `npm test` for a git user "Test User" on a machine "runner", still refuses a real name word', () => {
     const generic = fake({ machineIdentities: () => ['runner', 'localhost'] });
     generic.git = { ...generic.git, identities: () => ['Test User', 'test@example.org', 'main'] };
     for (const check of ['npm test', 'node user.js', 'npm run test -- --user admin']) {

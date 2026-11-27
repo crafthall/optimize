@@ -242,7 +242,7 @@ describe('compare: spending guard', () => {
     );
   });
 
-  it('--max-runs below 2 is a usage error: no run of one arm would fit (#1112)', async () => {
+  it('--max-runs below 2 is a usage error: no run of one arm would fit', async () => {
     const d = fake();
     const r = await call(d, ...GO, '--yes', '--max-runs', '1', '--force');
     expect(r.code).toBe(EXIT.usage);
@@ -425,7 +425,7 @@ describe('report', () => {
     expect((await call(d, 'report', 'missing.json')).code).toBe(EXIT.usage);
   });
 
-  it('--redact (#1066): same verdict first, share-safe JSON that validates and links to no store, commit or task name', async () => {
+  it('--redact: same verdict first, share-safe JSON that validates and links to no store, commit or task name', async () => {
     const d = fake();
     await call(d, ...GO, '--yes');
     const [rec] = storedRecords(d);
@@ -571,7 +571,7 @@ describe('compare: auth (R0-12)', () => {
   });
 });
 
-describe('billing mode and cost labels (R0-10, R0-11, #1033)', () => {
+describe('billing mode and cost labels (R0-10, R0-11)', () => {
   const CONFIG = `${REPO}/.crafthall/optimize/config.json`;
 
   it('config set billing stores the mode locally; a bad key or mode is a usage error (2)', async () => {
@@ -645,7 +645,7 @@ describe('billing mode and cost labels (R0-10, R0-11, #1033)', () => {
 });
 
 // Model pin per arm and Ctrl-C.
-describe('compare: model per arm (#1130)', () => {
+describe('compare: model per arm', () => {
   const armOf = (seq: number) => (seq % 2 === 0 ? 'baseline' : 'changed');
   it('two arms on different models: nothing excluded, both models stored and reported', async () => {
     const d = fake({ model: (seq) => (armOf(seq) === 'baseline' ? 'claude-opus-5-5' : 'claude-sonnet-5-5') });
@@ -712,7 +712,7 @@ describe('compare: model per arm (#1130)', () => {
 
 // Model pin per (arm, fixture) (stats review §11 item 1 follow-up): fixtures configured with different models
 // are measured, not excluded wholesale; a model change within one (arm, fixture) is still a fallback.
-describe('compare: model per (arm, fixture) (#1131)', () => {
+describe('compare: model per (arm, fixture)', () => {
   const settings = (model: string) => ({ '.claude/settings.json': JSON.stringify({ model }) });
   const byFixture = (fixture: string) => (fixture === 'f1' ? 'claude-opus-5-5' : 'claude-sonnet-5-5');
 
@@ -742,7 +742,7 @@ describe('compare: model per (arm, fixture) (#1131)', () => {
   // so a fallback on f2's first baseline run (seq 2) should be caught by f1's baseline pin, as it was under. With
   // a pin per (arm, fixture) it pins f2's baseline to the fallback model instead, every on-plan f2 baseline run
   // (seq 6, 10, 14) is excluded, and `versions.modelByArm` (f1's pin) hides it from the T1 protocol check.
-  it('#1131 review: fixtures sharing one configured model (here none) share one pin per arm', async () => {
+  it('review – fixtures sharing one configured model (here none) share one pin per arm', async () => {
     const d = fake({ second: {}, model: (seq) => (seq === 2 ? 'claude-sonnet-5-5' : 'claude-opus-5-5') });
     expect((await call(d, ...GO, '--yes', '--force')).code).toBe(EXIT.ok);
     expect(storedRecords(d)[0]!.exclusions).toEqual([{ seq: 2, reason: 'model-fallback' }]);
@@ -794,7 +794,7 @@ describe('compare: model per (arm, fixture) (#1131)', () => {
   });
 });
 
-describe('compare: Ctrl-C (#1130)', () => {
+describe('compare: Ctrl-C', () => {
   it('an interrupted run stops scheduling, removes every worktree, writes a valid incomplete record of the runs done, exits 5', async () => {
     const d = fake({ interruptAt: 3 });
     const r = await call(d, ...GO, '--yes');
@@ -823,7 +823,7 @@ describe('compare: Ctrl-C (#1130)', () => {
 });
 
 // Informative censoring (stats review §11 item 2): a record the user interrupted is never a "measured saving".
-describe('compare: the verdict of an interrupted record is capped at "likely saving" (#1131)', () => {
+describe('compare: the verdict of an interrupted record is capped at "likely saving"', () => {
   it('the same 7 runs: stopped by the run cap → measured saving; interrupted → likely saving, stop "interrupted" (failing before)', async () => {
     const capped = fake();
     expect((await call(capped, ...GO, '--yes', '--force', '--max-runs', '7')).code).toBe(EXIT.runCap);
@@ -854,7 +854,7 @@ describe('compare: the verdict of an interrupted record is capped at "likely sav
   });
 });
 
-describe('compare: an environment error mid-comparison keeps the completed runs (#1137)', () => {
+describe('compare: an environment error mid-comparison keeps the completed runs', () => {
   it('git timing out at run 4 stops scheduling, removes every worktree, stores a valid incomplete record of runs 0-3, exits 4', async () => {
     const d = fake({ gitTimeoutAt: 4 + 1 });
     const r = await call(d, ...GO, '--yes');

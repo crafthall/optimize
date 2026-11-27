@@ -77,7 +77,7 @@ git('checkout', '-q', '--', '.claude/settings.json');
 
 const GO = ['compare', '--change', 'change.patch', '--monthly-volume', '1000', '--yes'];
 
-describe('compare: model per arm and Ctrl-C with the built binary (#1130)', () => {
+describe('compare: model per arm and Ctrl-C with the built binary', () => {
   it('fixture add pins the task', () => {
     const r = runCli(['fixture', 'add', 'pass', '--prompt', 'task.md', '--check', 'node check.mjs'], { cwd: repo, env });
     expect(r.status, r.stderr).toBe(0);

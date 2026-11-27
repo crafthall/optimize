@@ -24,7 +24,7 @@ function e2eGuardViolations(source: string): string[] {
 const TEST_DIR = import.meta.dirname;
 const e2eFiles = readdirSync(TEST_DIR).filter((f) => f.endsWith('.e2e.test.ts'));
 
-describe('every E2E file uses the PATH helper (#1118)', () => {
+describe('every E2E file uses the PATH helper', () => {
   it('finds the E2E files', () => expect(e2eFiles.length).toBeGreaterThanOrEqual(6));
   it.each(e2eFiles)('%s', (file) => expect(e2eGuardViolations(readFileSync(join(TEST_DIR, file), 'utf8'))).toEqual([]));
 

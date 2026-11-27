@@ -95,7 +95,7 @@ describe('claim checker', () => {
   });
 });
 
-describe('verdict and printed interval agree (follow-up on #1031)', () => {
+describe('verdict and printed interval agree (follow-up)', () => {
   it('an upper bound of 0.9996 prints as 1.000 with "not enough evidence"', () => {
     expect(verdictCode(0.88, [0.7, 0.9996])).toBe('likely-saving');
     expect(printedVerdictCode(0.88, [0.7, 0.9996])).toBe('not-enough-evidence');

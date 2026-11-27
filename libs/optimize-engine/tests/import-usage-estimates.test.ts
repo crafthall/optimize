@@ -24,7 +24,7 @@ const req = (t: number, f: Partial<RequestFields>): RequestFields => ({ t, sidec
 const session = (requests: RequestFields[], toolResults: ToolResultFields[] = []): SessionFields => ({ requests, toolResults, ttlSplit: true });
 const shareOf = (d: { effect: { kind: string; share?: number } } | undefined): number => (d && d.effect.kind === 'estimate' ? d.effect.share! : NaN);
 
-describe('#1123 – per-model weights', () => {
+describe('per-model weights', () => {
   it.each([
     ['claude-opus-5-5', 0.05, 1.3],
     ['claude-sonnet-5-5', 0.05, 1.3],
@@ -46,7 +46,7 @@ describe('#1123 – per-model weights', () => {
     expect(modelWeights(model)).toEqual({ read, tokenizer });
   });
 
-  it('an unknown model falls back to the documented default (the pre-#1123 weights)', () => {
+  it('an unknown model falls back to the documented default (the earlier single default weights)', () => {
     expect(DEFAULT_MODEL_WEIGHTS).toEqual({ read: 0.1, tokenizer: 1 });
     for (const m of [null, undefined, '<synthetic>', 'claude-next', 'gpt-4o']) expect(modelWeights(m)).toEqual(DEFAULT_MODEL_WEIGHTS);
     expect(NEW_TOKENIZER_FACTOR).toBe(1.3);
@@ -60,7 +60,7 @@ describe('#1123 – per-model weights', () => {
   });
 });
 
-describe('#1123 – D2 with each request read at its own model weight', () => {
+describe('D2 with each request read at its own model weight', () => {
   // The 5m → 1h hand case: W₅ = 81,500, R = 41,000.
   const fiveMin = (model?: string): SessionFields =>
     session([
@@ -77,7 +77,7 @@ describe('#1123 – D2 with each request read at its own model weight', () => {
     expect(shareOf(checkD2([fiveMin('claude-fable-5-2')])[0])).toBeCloseTo(19_850 / 112_430, 12);
   });
 
-  it('an unknown model keeps the #1116 number: 16,775 ÷ 115,505', () => {
+  it('an unknown model keeps the single-weight number: 16,775 ÷ 115,505', () => {
     expect(shareOf(checkD2([fiveMin('claude-next')])[0])).toBeCloseTo(16_775 / 115_505, 12);
   });
 
@@ -149,7 +149,7 @@ const branched = (opts: { ttl?: '5m' | '1h'; model?: string; compactAfterA2?: bo
     .map((r) => line({ ttl: opts.ttl, model: opts.model, ...r } as Rec))
     .join('\n');
 
-describe('#1123 – D6 on the result\'s own chain, at the session TTL, with the model tokenizer', () => {
+describe('D6 on the result\'s own chain, at the session TTL, with the model tokenizer', () => {
   it('the reader links the result to the 3 later requests on its chain, not the 2 on the rewound branch', () => {
     const s = readSessionFields(branched());
     expect(s.requests).toHaveLength(6);
@@ -189,7 +189,7 @@ const CONFIG: ConfigFile[] = [
   { path: '.claude/rules/tests.md', text: `${DUP}\n` },
 ];
 
-describe('#1123 – D5 with the model tokenizer and read weight', () => {
+describe('D5 with the model tokenizer and read weight', () => {
   const tokens = Math.ceil(DUP.length / 4); // 21 tokens at chars ÷ 4
   const heavy = { read: 100_000, write5m: 3_000, output: 1_000 };
 
@@ -224,7 +224,7 @@ const sessionArb: fc.Arbitrary<SessionFields> = fc
   });
 
 // QA review: model ids as Claude Code, Bedrock and Vertex write them.
-describe('#1123 review – model id edge cases', () => {
+describe('per-model weights review – model id edge cases', () => {
   it.each([
     ['claude-opus-5-5[1m]', 0.05, 1.3], // 1M-context suffix
     ['claude-opus-4-7[1m]', 0.1, 1.3],
@@ -256,7 +256,7 @@ describe('#1123 review – model id edge cases', () => {
 // tool_use A → tool_use B; result A parent A, result B parent B, next record parent result B). Result A is then a leaf
 // with no request after it on its chain, so D6 counts one write and no re-reads for it, although every later request
 // sends it. The reader should give result A the same later requests as its batch sibling (expected [a2, a3]).
-describe('#1123 review – parallel Bash calls', () => {
+describe('per-model weights review – parallel Bash calls', () => {
   const big = 'y'.repeat(28_000);
   const usage = { input_tokens: 10, cache_creation_input_tokens: 1_000, cache_read_input_tokens: 20_000, output_tokens: 200 };
   const recs = [
@@ -276,7 +276,7 @@ describe('#1123 review – parallel Bash calls', () => {
   });
 });
 
-describe('#1123 – properties', () => {
+describe('per-model weights – properties', () => {
   it('ranking and shares are unchanged when the estimate inputs are unchanged (default-weight model, fallback-equal links)', () => {
     fc.assert(
       fc.property(fc.array(sessionArb, { minLength: 1, maxLength: 3 }), (sessions) => {
