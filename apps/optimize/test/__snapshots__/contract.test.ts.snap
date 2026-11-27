@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > compare --help 1`] = `
+"Usage: crafthall-optimize compare --change <patch-file> [--fixtures <a,b,c>] [--runs-per-arm <n>] [--cv <x>] [--monthly-volume <usd>] [--max-budget-usd <n>] [--max-runs <n>] [--auth <api-key|subscription>] [--metric <tokens|cost>] [--trust-fixture-config] [--plan-only] [--yes] [--force] [--json]
+
+Paired before/after of one change (verdict on token use or cost); prints the plan first and asks before any run."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > config set --help 1`] = `
+"Usage: crafthall-optimize config set billing <api|subscription|credits>
+
+Store the billing mode that drives the cost labels (asked once by every report when unset)."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > fixture add --help 1`] = `
+"Usage: crafthall-optimize fixture add <name> --prompt <file> --check "<cmd>" [--commit <sha>] [--timeout-min <n>] [--max-budget-usd <n>]
+
+Freeze a task: repo at a commit, prompt file (hash only), success command, caps."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > fixture list --help 1`] = `
+"Usage: crafthall-optimize fixture list [--json]
+
+List the fixtures of this repository."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > fixture remove --help 1`] = `
+"Usage: crafthall-optimize fixture remove <name> [--json]
+
+Delete a fixture."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > import-usage --help 1`] = `
+"Usage: crafthall-optimize import-usage [--usage-file <file>] [--read-transcripts <dir>] [--otel <file>] [--json]   (or paste the /usage rows on stdin)
+
+Hypotheses from pasted /usage rows and the non-native checks D2, D3, D5, D6 (estimated, not measured); reads session records only with --read-transcripts; --otel is not built yet."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > report --help 1`] = `
+"Usage: crafthall-optimize report <record.json|id> [--redact] [--json]
+
+Re-print a stored comparison record; --redact gives a share-safe copy."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > top level 1`] = `
+"Crafthall Optimize – measure whether a change to your Claude Code setup saves cost while your tasks still pass.
+Runs on this machine. Makes no network call of its own; the only traffic is your own \`claude -p\` runs during \`compare\`.
+
+Usage: crafthall-optimize <command> [options]
+
+Commands:
+  fixture add     Freeze a task: repo at a commit, prompt file (hash only), success command, caps
+  fixture list    List the fixtures of this repository
+  fixture remove  Delete a fixture
+  config set      Store the billing mode that drives the cost labels (asked once by every report when unset)
+  import-usage    Hypotheses from pasted /usage rows and the non-native checks D2, D3, D5, D6 (estimated, not measured); reads session records only with --read-transcripts; --otel is not built yet
+  usage           Tokens this repository's Claude Code sessions used (last 7 days by default), where they went (D1-D6, estimated) and ranked fixes; reads usage fields only
+  compare         Paired before/after of one change (verdict on token use or cost); prints the plan first and asks before any run
+  report          Re-print a stored comparison record; --redact gives a share-safe copy
+
+Options:
+  -h, --help     Show this help (or \`<command> --help\`)
+  -v, --version  Show the version and the record schema version
+
+Exit codes: 0 done, 1 internal error, 2 usage error, 3 refused by a guard, 4 environment error, 5 run cap reached or interrupted.
+
+Data: fixtures and records are stored in <repo>/.crafthall/optimize/ (own .gitignore); never prompt text, file
+content, tool output, secrets, credentials, absolute paths, user or host names, git names or e-mails, or branch names.
+\`report --redact\` prints a share-safe copy of a record."
+`;
+
+exports[`--help snapshots (contract: a change to the interface shows up in review) > usage --help 1`] = `
+"Usage: crafthall-optimize usage [--read-transcripts <dir>] [--days <n>] [--usage-file <file|->] [--json]
+
+Tokens this repository's Claude Code sessions used (last 7 days by default), where they went (D1-D6, estimated) and ranked fixes; reads usage fields only."
+`;

@@ -1,0 +1,35 @@
+{
+  "name": "crafthall-optimize-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Source of Crafthall Optimize: the crafthall-optimize CLI and Claude Code plugin (apps/optimize) and its engine (libs/optimize-engine).",
+  "homepage": "https://crafthall.dev",
+  "bugs": {
+    "email": "support@crafthall.dev"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "workspaces": [
+    "libs/optimize-engine",
+    "apps/optimize"
+  ],
+  "scripts": {
+    "build": "npm run build -w @crafthall/optimize",
+    "typecheck": "tsc --build",
+    "test": "vitest run --config libs/optimize-engine/vitest.config.mts && vitest run --config apps/optimize/vitest.config.mts",
+    "test:e2e": "npm run build && vitest run --config apps/optimize/vitest.e2e.config.mts",
+    "test:claude": "npm run build && vitest run --config apps/optimize/vitest.claude.config.mts",
+    "verify": "npm run typecheck && npm test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "esbuild": "0.28.2",
+    "fast-check": "4.10.2",
+    "tslib": "2.9.1",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

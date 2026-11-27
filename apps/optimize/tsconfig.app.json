@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out-tsc/app",
+    "types": [
+      "node"
+    ],
+    "rootDir": "src",
+    "tsBuildInfoFile": "out-tsc/tsconfig.app.tsbuildinfo"
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../libs/optimize-engine/tsconfig.lib.json"
+    }
+  ]
+}

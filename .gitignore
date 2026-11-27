@@ -1,0 +1,11 @@
+node_modules
+dist/
+out-tsc/
+coverage/
+*.tsbuildinfo
+.DS_Store
+# Claude Code plugin: build copies written by apps/optimize/scripts/build.mjs
+apps/optimize/plugin/scripts/
+apps/optimize/plugin/LICENSE
+apps/optimize/plugin/README.md
+apps/optimize/plugin/THIRD-PARTY-NOTICES.md

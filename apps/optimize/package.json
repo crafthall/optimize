@@ -1,0 +1,33 @@
+{
+  "name": "@crafthall/optimize",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://crafthall.dev",
+  "bugs": {
+    "email": "support@crafthall.dev"
+  },
+  "description": "Crafthall Optimize CLI: measure whether a change to a Claude Code setup saves cost with tasks still passing. Thin shell over @crafthall/optimize-engine; runs locally, makes no network call of its own, works without Crafthall HQ.",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "crafthall-optimize": "dist/crafthall-optimize.mjs"
+  },
+  "files": [
+    "dist/crafthall-optimize.mjs",
+    "README.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "prepublishOnly": "node scripts/publish-guard.mjs",
+    "test": "vitest run",
+    "test:e2e": "npm run build && vitest run --config vitest.e2e.config.mts"
+  },
+  "devDependencies": {
+    "@crafthall/optimize-engine": "*"
+  }
+}

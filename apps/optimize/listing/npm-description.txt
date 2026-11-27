@@ -1,0 +1,1 @@
+Count Claude Code token use, rank fixes (estimated, not measured), measure a change in paired runs. Not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.

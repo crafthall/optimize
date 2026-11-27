@@ -1,0 +1,18 @@
+{
+  "name": "crafthall-optimize",
+  "displayName": "Crafthall Optimize",
+  "version": "0.1.0",
+  "description": "Count your Claude Code token use, get ranked fixes to try (estimated, not measured), and measure one setup change with paired runs of your own tasks. A comparison shows its plan and expected cost first and runs only after you confirm. Optimize itself sends nothing to Crafthall; comparisons are ordinary Claude Code runs on your own account. Not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.",
+  "author": {
+    "name": "Lukasz Pawelczak"
+  },
+  "homepage": "https://crafthall.dev",
+  "license": "MIT",
+  "keywords": [
+    "tokens",
+    "usage",
+    "cost",
+    "measurement",
+    "claude-md"
+  ]
+}
