@@ -27,13 +27,18 @@ claude plugin install crafthall-optimize@crafthall
 
 Already in a session: `/plugin install crafthall-optimize --marketplace crafthall/plugins`, then `/reload-plugins`. The commands are then available in Claude Code under the `/crafthall-optimize:` prefix. A comparison started from the plugin also stops at the plan until you confirm.
 
-### Command line (npx)
+### Command line (standalone file)
+
+The command line tool is one JavaScript file with no dependencies, attached to every [GitHub Release](https://github.com/crafthall/optimize/releases). Download it and run it with Node.js:
 
 ```bash
-npx @crafthall/optimize --help
+curl -fsSLO https://github.com/crafthall/optimize/releases/latest/download/crafthall-optimize.mjs
+node crafthall-optimize.mjs --help
 ```
 
-Run it inside the git repository whose Claude Code setup you want to look at. The examples below use the binary name `crafthall-optimize`; with npx, write `npx @crafthall/optimize` instead.
+Each release lists the file's SHA-256, so you can check the download (`shasum -a 256 crafthall-optimize.mjs`). To type `crafthall-optimize` instead, make the file executable and put it on your PATH, for example `chmod +x crafthall-optimize.mjs` and `mv crafthall-optimize.mjs ~/.local/bin/crafthall-optimize`.
+
+Run it inside the git repository whose Claude Code setup you want to look at. The examples below use the command name `crafthall-optimize`; without the PATH step, write `node crafthall-optimize.mjs` instead. An npm package is planned for later.
 
 ## Quick start (about 5 minutes, nothing spent)
 

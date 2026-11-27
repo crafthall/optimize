@@ -11,6 +11,7 @@ const read = (p: string) => readFileSync(join(APP, p), 'utf8');
 const TEXTS: [string, CopyKind][] = [
   ['README.md', 'full'],
   ['listing/marketplace.md', 'full'],
+  // Kept for the later npm channel: release 1 ships without npm (owner, 2026-11-27), so this line is not published yet.
   ['listing/npm-description.txt', 'short'],
 ];
 

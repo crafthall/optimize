@@ -26,7 +26,7 @@ export const ALLOWED_MODULES: ReadonlySet<string> = new Set(['node:child_process
  * do not pass. Every other http(s) URL is a finding.
  */
 export const ALLOWED_URL_PREFIXES: readonly string[] = [
-  'https://github.com/crafthall/optimize', // source repository and its issues = the support channel (brand REPO_URL/SUPPORT_URL, README, bugs.url; R1-14)
+  'https://github.com/crafthall/optimize', // source repository, its issues = the support channel (brand REPO_URL/SUPPORT_URL, README, bugs.url; R1-14) and its releases = the standalone CLI download (README)
   'https://crafthall.dev', // homepage and the $id of the token-usage JSON schema (an identifier, never fetched)
   'https://json-schema.org/draft/2020-12/schema', // $schema of the record and token-usage schemas (an identifier)
   'https://code.claude.com/docs/', // Claude Code documentation cited in user-facing text

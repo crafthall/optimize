@@ -12,7 +12,10 @@ export const PRODUCT_NAME = 'Crafthall Optimize';
 export const PLUGIN_ID = 'crafthall-optimize';
 /** Prefix of the plugin's slash commands, e.g. `/crafthall-optimize:compare`. */
 export const COMMAND_PREFIX = `/${PLUGIN_ID}:`;
-/** npm package name (R1-04); `npm view` returned 404 on 2026-11-27. */
+/**
+ * npm package name (R1-04); `npm view` returned 404 on 2026-11-27. Reserved for a later channel: release 1
+ * ships without npm (owner, chat 2026-11-27: "can we work on GitHub only for now?"), so no user-facing text names it.
+ */
 export const NPM_NAME = '@crafthall/optimize';
 /** The binary (`bin` in package.json). */
 export const BIN_NAME = 'crafthall-optimize';
@@ -50,6 +53,19 @@ export const PUBLIC_IDS = {
   releaseLabel: RELEASE_LABEL,
 } as const;
 
+/**
+ * The standalone CLI of release 1 (owner, chat 2026-11-27): the zero-dependency bundle, attached under this file name
+ * to every GitHub Release of REPO_URL (tag `v<version>`). Users run it with Node.js 20+ (`node <asset> …`, or make it
+ * executable and put it on PATH). `npm run optimize:release-asset` builds the file and prints its SHA-256.
+ */
+export const RELEASE_ASSET = `${BIN_NAME}.mjs`;
+/** The project's GitHub Releases page. */
+export const RELEASES_URL = `${REPO_URL}/releases`;
+/** Download URL of the asset of the newest release (GitHub's `releases/latest/download/<asset>` redirect). */
+export const RELEASE_ASSET_LATEST_URL = `${RELEASES_URL}/latest/download/${RELEASE_ASSET}`;
+/** Download URL of the asset of one release, tag `v<version>`. */
+export const releaseAssetUrl = (version: string = CLI_VERSION): string => `${RELEASES_URL}/download/v${version}/${RELEASE_ASSET}`;
+
 /** The public plugin marketplace of the Crafthall family (shared with Crafthall HQ, owner 2026-11-25). */
 export const MARKETPLACE = 'crafthall';
 /** What `--marketplace` / `marketplace add` gets: the GitHub repository that hosts the marketplace. */
@@ -72,9 +88,12 @@ export const INSTALL = {
   uninstall: `claude plugin uninstall ${PLUGIN_ID}@${MARKETPLACE}`,
   /** The first command to run in Claude Code after the install. */
   firstRun: `${COMMAND_PREFIX}usage`,
-  /** Without installing the plugin. */
-  npxHelp: `npx ${NPM_NAME} --help`,
-  npxUsage: `npx ${NPM_NAME} usage`,
+  /** Without the plugin: download the standalone CLI from the newest GitHub Release (release 1 has no npm package). */
+  cliDownload: `curl -fsSLO ${RELEASE_ASSET_LATEST_URL}`,
+  cliHelp: `node ${RELEASE_ASSET} --help`,
+  cliUsage: `node ${RELEASE_ASSET} usage`,
+  /** Optional: the downloaded file as the `crafthall-optimize` command (the quick start's spelling). */
+  cliOnPath: [`chmod +x ${RELEASE_ASSET}`, `mv ${RELEASE_ASSET} ~/.local/bin/${BIN_NAME}`],
   /** The README quick start (about 5 minutes, nothing spent), with the binary name. */
   quickStart: [
     `${BIN_NAME} config set billing subscription`,

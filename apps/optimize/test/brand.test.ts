@@ -87,6 +87,38 @@ describe('brand module (R1-01)', () => {
   });
 });
 
+describe('release 1 channels without npm (owner, chat 2026-11-27)', () => {
+  const readme = readFileSync(join(APP, 'README.md'), 'utf8');
+  const listing = readFileSync(join(APP, 'listing', 'marketplace.md'), 'utf8');
+  const npmInstruction = /\bnpx\b|\bnpm (install|i|exec)\b|npm install -g|@crafthall\/optimize\b/;
+
+  it('the standalone CLI is the bundle, attached to a GitHub Release under its bin file name', () => {
+    expect(brand.RELEASE_ASSET).toBe('crafthall-optimize.mjs');
+    expect(pkg.bin[brand.BIN_NAME]).toBe(`dist/${brand.RELEASE_ASSET}`);
+    expect(brand.RELEASES_URL).toBe(`${brand.REPO_URL}/releases`);
+    expect(brand.RELEASE_ASSET_LATEST_URL).toBe('https://github.com/crafthall/optimize/releases/latest/download/crafthall-optimize.mjs');
+    expect(brand.releaseAssetUrl('0.1.0')).toBe('https://github.com/crafthall/optimize/releases/download/v0.1.0/crafthall-optimize.mjs');
+  });
+
+  it('no install command names npm or npx; npm stays a later channel (private package, guard kept)', () => {
+    const commands = Object.values(brand.INSTALL).flat();
+    expect(commands.filter((c) => npmInstruction.test(c))).toEqual([]);
+    expect(pkg.private).toBe(true);
+    // the check is not vacuous
+    expect(['npx @crafthall/optimize --help', 'npm install -g x', 'npm test'].filter((c) => npmInstruction.test(c))).toHaveLength(2);
+  });
+
+  it('the README and the marketplace listing give no npm install instruction; the README gives the release download', () => {
+    expect(readme.match(npmInstruction)).toBeNull();
+    expect(listing.match(npmInstruction)).toBeNull();
+    expect(readme).toContain(brand.INSTALL.cliDownload);
+    expect(readme).toContain(brand.INSTALL.cliHelp);
+    for (const c of brand.INSTALL.cliOnPath) expect(readme).toContain(c);
+    expect(readme).toContain(brand.INSTALL.fallback[0]);
+    expect(readme).toContain(brand.INSTALL.fallback[1]);
+  });
+});
+
 describe('publish guard (R1-04)', () => {
   const guard = (env: Record<string, string>) =>
     spawnSync(process.execPath, [join(APP, 'scripts', 'publish-guard.mjs')], { env: { PATH: '/usr/bin:/bin', ...env }, encoding: 'utf8' });
