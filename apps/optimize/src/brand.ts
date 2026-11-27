@@ -13,6 +13,7 @@ export {
   PRODUCT_NAME,
   PUBLIC_IDS,
   RELEASE_LABEL,
+  REPO_URL,
   SUPPORT_ADDRESS_STATUS,
-  SUPPORT_EMAIL,
+  SUPPORT_URL,
 } from '@crafthall/optimize-engine/brand';

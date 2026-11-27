@@ -6,7 +6,7 @@
   "license": "MIT",
   "homepage": "https://crafthall.dev",
   "bugs": {
-    "email": "support@crafthall.dev"
+    "url": "https://github.com/crafthall/optimize/issues"
   },
   "description": "Crafthall Optimize CLI: measure whether a change to a Claude Code setup saves cost with tasks still passing. Thin shell over @crafthall/optimize-engine; runs locally, makes no network call of its own, works without Crafthall HQ.",
   "engines": {

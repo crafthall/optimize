@@ -50,12 +50,17 @@ describe('shipped-artifact scan rules (R1-06)', () => {
     ['const k = "Anonymous telemetry helps us";', 'telemetry'],
     ['const u = "https://api.crafthall-engine.example/v1";', 'URL outside the documentation allow list'],
     ['const u = "http://crafthall.dev";', 'URL outside the documentation allow list'],
+    ['const u = "https://github.com/crafthall/optimize-mirror";', 'URL outside the documentation allow list'],
+    ['const u = "https://crafthall.dev.example.net/x";', 'URL outside the documentation allow list'],
   ])('catches %s', (text, rule) => {
     expect(js(text)).toContain(rule);
   });
 
   it('docs: paid phrases and foreign URLs are findings; truthful "no account, no sign-in, no telemetry" is not', () => {
     expect(md('Free. No account, no sign-in, no telemetry. See https://crafthall.dev and https://code.claude.com/docs/en/costs.')).toEqual([]);
+    // the source repository and its issues (support channel, R1-14) are allowed, narrowly: not any repository on GitHub
+    expect(md('Support: https://github.com/crafthall/optimize/issues, source https://github.com/crafthall/optimize')).toEqual([]);
+    expect(md('See https://github.com/crafthall/plugins')).toEqual(['URL outside the documentation allow list']);
     expect(md('Buy a licence key at checkout: USD 15/month. https://tracker.example.com/x')).toEqual(
       expect.arrayContaining(['licence key', 'checkout', 'price amount', 'URL outside the documentation allow list']),
     );

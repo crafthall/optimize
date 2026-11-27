@@ -30,12 +30,14 @@ export const REPO_URL = 'https://github.com/crafthall/optimize';
 /** package.json `homepage`. */
 export const HOMEPAGE = 'https://crafthall.dev';
 /**
- * package.json `bugs.email` – PENDING R1-14: the owner has not chosen the support address yet. This value is a
- * placeholder on crafthall.dev; SUPPORT_ADDRESS_STATUS stays 'pending-R1-14' until the owner confirms the address and
- * a test e-mail arrives, and the release gate (R1-11) must not pass while it is pending.
+ * Support channel (R1-14; owner, chat 2026-11-27: "for now no e-mail needed – let them file tickets on GitHub"):
+ * the public issue tracker of the source repository, package.json `bugs.url`. There is no support e-mail; the
+ * privacy contact on the website stays separate. The tracker is a public channel, so every text that names it tells
+ * users not to post prompt text, secrets or unredacted records. It needs no account step, so its status is
+ * 'confirmed'; it opens to users when the repository goes public, which is part of the publication go (R1-16).
  */
-export const SUPPORT_EMAIL = 'support@crafthall.dev';
-export const SUPPORT_ADDRESS_STATUS: 'pending-R1-14' | 'confirmed' = 'pending-R1-14';
+export const SUPPORT_URL = `${REPO_URL}/issues`;
+export const SUPPORT_ADDRESS_STATUS = 'confirmed' as const;
 
 /** Every public id, by the name the release plan (r1.md R1-01) uses for it. */
 export const PUBLIC_IDS = {

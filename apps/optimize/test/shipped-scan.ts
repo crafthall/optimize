@@ -20,8 +20,13 @@ export interface Finding {
 /** Node built-ins the bundle may import (what src/ and the engine use today); anything else is a finding. */
 export const ALLOWED_MODULES: ReadonlySet<string> = new Set(['node:child_process', 'node:crypto', 'node:fs', 'node:os', 'node:path', 'node:util']);
 
-/** Documentation links a shipped file may contain, by URL prefix. Every other http(s) URL is a finding. */
+/**
+ * Documentation links a shipped file may contain, by URL prefix. A prefix without a trailing "/" matches only at a path
+ * boundary ("/", "?", "#" or the end), so `https://github.com/crafthall/optimize-mirror` or `https://crafthall.dev.x`
+ * do not pass. Every other http(s) URL is a finding.
+ */
 export const ALLOWED_URL_PREFIXES: readonly string[] = [
+  'https://github.com/crafthall/optimize', // source repository and its issues = the support channel (brand REPO_URL/SUPPORT_URL, README, bugs.url; R1-14)
   'https://crafthall.dev', // homepage and the $id of the token-usage JSON schema (an identifier, never fetched)
   'https://json-schema.org/draft/2020-12/schema', // $schema of the record and token-usage schemas (an identifier)
   'https://code.claude.com/docs/', // Claude Code documentation cited in user-facing text
@@ -77,6 +82,8 @@ export const EXEMPT_PHRASES: readonly string[] = [
 ];
 
 const isCode = (path: string): boolean => /\.[cm]?js$/.test(path);
+const allowedBy = (url: string, prefix: string): boolean =>
+  url.startsWith(prefix) && (prefix.endsWith('/') || url.length === prefix.length || '/?#'.includes(url[prefix.length]!));
 const URL_RE = /https?:\/\/[^\s"'`)<>\]]+/g;
 const importsOf = (text: string): string[] =>
   [...text.matchAll(/(?:^|[\s;])(?:import\s[^"'`;]*?from\s*|import\s*\(\s*|import\s+|require\s*\(\s*)["']([^"']+)["']/gm)].map((m) => m[1]!);
@@ -89,7 +96,7 @@ export function scanFile(file: ShippedFile): Finding[] {
     if (m) out.push({ file: file.path, rule, match: m[0] });
   };
   for (const url of file.text.match(URL_RE) ?? [])
-    if (!ALLOWED_URL_PREFIXES.some((p) => url.startsWith(p))) out.push({ file: file.path, rule: 'URL outside the documentation allow list', match: url });
+    if (!ALLOWED_URL_PREFIXES.some((p) => allowedBy(url, p))) out.push({ file: file.path, rule: 'URL outside the documentation allow list', match: url });
   for (const [rule, re] of PAID_RULES) hit(rule, re, file.text);
   if (file.path === 'package.json') {
     const pkg = JSON.parse(file.text) as Record<string, Record<string, string> | undefined>;

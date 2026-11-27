@@ -186,7 +186,7 @@ Optimize never stores prompt text, tool output, file content, secrets, credentia
 
 ## Support
 
-Support: e-mail only – [support@crafthall.dev](mailto:support@crafthall.dev). Include the command you ran, the first line of its output and `crafthall-optimize --version`. Do not send prompt text, secrets or unredacted records.
+Support: GitHub issues only – [github.com/crafthall/optimize/issues](https://github.com/crafthall/optimize/issues). Include the command you ran, the first line of its output and `crafthall-optimize --version`. The tracker is public: do not post prompt text, code, secrets or unredacted records.
 
 ## Licence
 

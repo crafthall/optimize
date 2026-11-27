@@ -7,7 +7,7 @@
   "description": "Source of Crafthall Optimize: the crafthall-optimize CLI and Claude Code plugin (apps/optimize) and its engine (libs/optimize-engine).",
   "homepage": "https://crafthall.dev",
   "bugs": {
-    "email": "support@crafthall.dev"
+    "url": "https://github.com/crafthall/optimize/issues"
   },
   "engines": {
     "node": ">=20.11"

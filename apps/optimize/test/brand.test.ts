@@ -32,7 +32,7 @@ describe('brand module (R1-01)', () => {
   });
 
   it('no public id contains "claude" or "anthropic" (case-insensitive)', () => {
-    const ids = [...Object.values(brand.PUBLIC_IDS), brand.HOMEPAGE, brand.SUPPORT_EMAIL, pkg.name, ...Object.keys(pkg.bin)];
+    const ids = [...Object.values(brand.PUBLIC_IDS), brand.HOMEPAGE, brand.SUPPORT_URL, pkg.name, ...Object.keys(pkg.bin)];
     expect(ids.filter((v) => /claude|anthropic/i.test(String(v)))).toEqual([]);
     // the check is not vacuous
     expect(['claude-optimize', 'AnthropicX', 'x'].filter((v) => /claude|anthropic/i.test(v))).toHaveLength(2);
@@ -44,7 +44,7 @@ describe('brand module (R1-01)', () => {
     expect(Object.keys(pkg.bin)).toEqual([brand.BIN_NAME]);
     expect(pkg.bin[brand.BIN_NAME]).toBe(`dist/${brand.BIN_NAME}.mjs`);
     expect(pkg.homepage).toBe(brand.HOMEPAGE);
-    expect(pkg.bugs).toEqual({ email: brand.SUPPORT_EMAIL });
+    expect(pkg.bugs).toEqual({ url: brand.SUPPORT_URL });
     expect(pkg.license).toBe('MIT');
   });
 
@@ -79,8 +79,11 @@ describe('brand module (R1-01)', () => {
     expect(src).not.toMatch(/crafthall-optimize|@crafthall\/optimize(?!-engine)|Crafthall Optimize|\b0\.1\.0\b/);
   });
 
-  it('the support address is a placeholder until R1-14 confirms it', () => {
-    expect(brand.SUPPORT_ADDRESS_STATUS).toBe('pending-R1-14');
+  it('support is the public issue tracker of the source repository, with no support e-mail (R1-14)', () => {
+    expect(brand.SUPPORT_URL).toBe('https://github.com/crafthall/optimize/issues');
+    expect(brand.SUPPORT_URL.startsWith(`${brand.REPO_URL}/`)).toBe(true);
+    expect(brand.SUPPORT_ADDRESS_STATUS).toBe('confirmed');
+    expect(JSON.stringify(pkg)).not.toMatch(/support@/);
   });
 });
 

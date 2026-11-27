@@ -42,6 +42,6 @@ A fixture's success command runs the repository's code on your machine, and with
 
 Beta. Small effects need many runs and often come back as "not enough evidence". Token counts come from Claude Code's records and are not a bill. Estimates, not advice or a guarantee of any saving.
 
-**Support:** e-mail only – support@crafthall.dev.
+**Support:** GitHub issues only – https://github.com/crafthall/optimize/issues (public; do not post prompt text, secrets or unredacted records).
 
 Not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.
